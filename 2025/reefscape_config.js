@@ -46,12 +46,12 @@ var config_data = `
         "code": "r", 
         "type": "robot",
         "choices": {
-          "r1": "<div style='display: inline-block; width: 50%; color: #FF4444'>Red-1: <span id='r1_team'></span></div>",
-          "b1": "<div style='display: inline-block; width: 50%; color: #4444FF'>Blue-1: <span id='b1_team'></span></div><br>",
-          "r2": "<div style='display: inline-block; width: 50%; color: #FF4444'>Red-2: <span id='r2_team'></span></div>",
-          "b2": "<div style='display: inline-block; width: 50%; color: #4444FF'>Blue-2: <span id='b2_team'></span></div><br>",
-          "r3": "<div style='display: inline-block; width: 50%; color: #FF4444'>Red-3: <span id='r3_team'></span></div>",
-          "b3": "<div style='display: inline-block; width: 50%; color: #4444FF'>Blue-3: <span id='b3_team'></span></div>"
+          "r1": "<span style='color: #FF4444'>Red-1: <span id='r1_team'></span></span><br>",
+          "r2": "<span style='color: #FF4444'>Red-2: <span id='r2_team'></span></span><br>",
+          "r3": "<span style='color: #FF4444'>Red-3: <span id='r3_team'></span></span><br>",
+          "b1": "<span style='color: #4444FF'>Blue-1: <span id='b1_team'></span></span><br>",
+          "b2": "<span style='color: #4444FF'>Blue-2: <span id='b2_team'></span></span><br>",
+          "b3": "<span style='color: #4444FF'>Blue-3: <span id='b3_team'></span></span>"
         },
         "required": "true",
         "locked": "true"
