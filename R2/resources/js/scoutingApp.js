@@ -1348,7 +1348,7 @@ function updateMatchStart(event) {
   if (event && event.target && event.target.id == "input_m") {
     const match = getCurrentMatch();
     if (match && match.red && match.red.team_keys) {
-      const r2TeamNumber = match.red.team_keys[2].replace("frc", "");  // Index 2 for B3
+      const r2TeamNumber = match.red.team_keys[1].replace("frc", "");  // Index 2 for B3
       document.getElementById("input_t").value = r2TeamNumber;
         onTeamnameChange();
       }
