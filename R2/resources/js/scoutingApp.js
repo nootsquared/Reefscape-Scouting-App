@@ -698,7 +698,7 @@ function configure() {
     }
   }
 
-  if (mydata.hasOwnProperty('checkboxAs')) {
+if (mydata.hasOwnProperty('checkboxAs')) {
     // Supported modes
     // YN - Y or N
     // TF - T or F
@@ -711,7 +711,6 @@ function configure() {
       checkboxAs = 'YN';
     }
   }
-
   // Configure prematch screen
   var pmc = mydata.prematch;
   var pmt = document.getElementById("prematch_table");
