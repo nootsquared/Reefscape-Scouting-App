@@ -759,12 +759,12 @@ function configure() {
 }
 
 function getRobot() {
-  return "r1";
+  return "r2";
 }
 
 
 function resetRobot() {
-  document.querySelector('input[value="r1"]').checked = true;
+  document.querySelector('input[value="r2"]').checked = true;
 }
 
 
@@ -1341,17 +1341,25 @@ function updateMatchStart(event) {
     return;
   }
   
-  // Always select R1
-  document.querySelector('input[value="r1"]').checked = true;
+  const match = getCurrentMatch();
+  console.log("Current match data:", match);
+  
+  // Check if the radio input exists before trying to set it
+  const r2Radio = document.querySelector('input[value="r2"]');
+  if (r2Radio) {
+    r2Radio.checked = true;
+  } else {
+    console.log("Warning: R2 radio button not found");
+  }
   
   updateRobotPositions();
 
-  // Auto-fill team number for R1
+  // Auto-fill team number for R2
   if (event.target.id == "input_m") {
-    const match = getCurrentMatch();
     if (match && match.red && match.red.team_keys) {
-      const r1TeamNumber = match.red.team_keys[0].replace("frc", "");
-      document.getElementById("input_t").value = r1TeamNumber;
+      const r2TeamNumber = match.red.team_keys[1].replace("frc", "");
+      console.log("R2 Team Number:", r2TeamNumber);
+      document.getElementById("input_t").value = r2TeamNumber;
       onTeamnameChange();
     }
   }
@@ -1556,12 +1564,12 @@ window.onload = function () {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Set initial robot selection to R3
-  document.querySelector('input[value="r3"]').checked = true;
+  // Set initial robot selection to R2
+  document.querySelector('input[value="r2"]').checked = true;
   
   // Disable changing robot selection
   document.querySelectorAll('input[name="r"]').forEach(input => {
-    if (input.value !== "r3") {
+    if (input.value !== "r2") {
       input.disabled = true;
     }
   });
