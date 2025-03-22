@@ -1341,7 +1341,7 @@ function updateMatchStart(event) {
   }
   
   // Always select R1
-  document.querySelector('input[value="r1"]').checked = true;
+  document.querySelector('input[value="r2"]').checked = true;
   
   updateRobotPositions();
 
