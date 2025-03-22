@@ -1341,21 +1341,15 @@ function updateMatchStart(event) {
   }
   
   // Always select R1
-const r2Radio = document.querySelector('input[value="r2"]');
-  if (r2Radio) {
-    r2Radio.checked = true;
-  } else {
-    console.log("R2 radio button not found");
-  updateRobotPositions();
+  document.querySelector('input[value="r2"]').checked = true;
+  
 
   // Auto-fill team number for R1
   if (event && event.target && event.target.id == "input_m") {
     const match = getCurrentMatch();
     if (match && match.red && match.red.team_keys) {
       const r2TeamNumber = match.red.team_keys[2].replace("frc", "");  // Index 2 for B3
-      const teamInput = document.getElementById("input_t");
-      if (teamInput) {
-        teamInput.value = r2TeamNumber;
+      document.getElementById("input_t").value = r2TeamNumber;
         onTeamnameChange();
       }
     }
