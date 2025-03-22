@@ -14,7 +14,7 @@
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', () => {
 					navigator.serviceWorker.register('./sw.js', { 
-						scope: '/Reefscape-Scouting-App/R2/' // Updated scope to match repository path
+						scope: '/Reefscape-Scouting-App/r3/' // Updated scope to match repository path
 					})
 					.catch(error => {
 						console.log('SW registration failed:', error);
@@ -39,7 +39,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="prematchHeader2">pre-match</h2>
+					<h2 id="prematchHeader3">pre-match</h2>
 					<p class="match-label"><input type="button" value="Next" id="nextButton1" onclick="swipePage(1)"></p>
 					<table id="prematch_table" style="font: Roboto">
 					<!-- ###PRE-MATCH-COMPONENTS###-->
@@ -59,7 +59,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="autonHeader2">Auton</h2>
+					<h2 id="autonHeader3">Auton</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton1" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton3" onclick="swipePage(1)"></p>
 					<table id="auton_table">
 					<!-- ###AUTON-COMPONENTS###-->
@@ -79,7 +79,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="teleopHeader2">Teleop</h2>
+					<h2 id="teleopHeader3">Teleop</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton3" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton5" onclick="swipePage(1)"></p>
 					<table id="teleop_table">
 						<!-- ###TELEOP-COMPONENTS###-->
@@ -99,7 +99,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="endgameHeader2">Endgame</h2>
+					<h2 id="endgameHeader3">Endgame</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton5" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton7" onclick="swipePage(1)"></p>
 					<table id="endgame_table">
 						<!-- ###ENDGAME-COMPONENTS###-->
@@ -139,7 +139,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="qrHeader2">Generate QR Code</h2>
+					<h2 id="qrHeader3">Generate QR Code</h2>
 					<p class="match-label"><input type="button" value="Next" id="nextButton1" onclick="swipePage(1)"></p>
 					<table id="prematch_table" style="font: Roboto">
 					<!-- ###PRE-MATCH-COMPONENTS###-->
@@ -159,7 +159,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="autonHeader2">Auton</h2>
+					<h2 id="autonHeader3">Auton</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton1" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton3" onclick="swipePage(1)"></p>
 					<table id="auton_table">
 					<!-- ###AUTON-COMPONENTS###-->
@@ -179,7 +179,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="teleopHeader2">Teleop</h2>
+					<h2 id="teleopHeader3">Teleop</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton3" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton5" onclick="swipePage(1)"></p>
 					<table id="teleop_table">
 						<!-- ###TELEOP-COMPONENTS###-->
@@ -199,7 +199,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="endgameHeader2">Endgame</h2>
+					<h2 id="endgameHeader3">Endgame</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton5" onclick="swipePage(-1)"><input type="button" value="Next" id="nextButton7" onclick="swipePage(1)"></p>
 					<table id="endgame_table">
 						<!-- ###ENDGAME-COMPONENTS###-->
@@ -239,7 +239,7 @@
 						<span class="even">P</span>
 						<span class="odd">E</span>
 					</h1>
-					<h2 id="qrHeader2">Generate QR Code</h2>
+					<h2 id="qrHeader3">Generate QR Code</h2>
 					<p class="match-label"><input type="button" value="Prev" id="prevButton9" onclick="swipePage(-1)"></p>
 					<p id="qr-info"><span id="display_qr-info" style="border: none; text-align: center;"></span></p>
 					<table id="qr-table"><tr><td width="5%">&nbsp;</td><td width="90%">
