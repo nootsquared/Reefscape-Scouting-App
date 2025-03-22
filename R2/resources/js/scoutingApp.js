@@ -1344,8 +1344,13 @@ function updateMatchStart(event) {
   const match = getCurrentMatch();
   console.log("Current match data:", match);
   
-  // Always select R2
-  document.querySelector('input[value="r2"]').checked = true;
+  // Check if the radio input exists before trying to set it
+  const r2Radio = document.querySelector('input[value="r2"]');
+  if (r2Radio) {
+    r2Radio.checked = true;
+  } else {
+    console.log("Warning: R2 radio button not found");
+  }
   
   updateRobotPositions();
 
