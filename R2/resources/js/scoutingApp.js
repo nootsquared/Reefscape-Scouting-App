@@ -10,12 +10,41 @@ var checkboxAs = 'YN';
 var ColWidth = '200px';
 var VIBRATION_DURATION = 50;  // Short vibration duration in ms
 
-// Options
+// Options for QR Code generation
 var options = {
-  correctLevel: QRCode.CorrectLevel.L,
-  quietZone: 15,
-  quietZoneColor: '#FFFFFF'
+    text: "",
+    width: 512,
+    height: 512,
+    correctLevel: QRCode.CorrectLevel.L,
+    quietZone: 15,
+    quietZoneColor: '#FFFFFF',
+    logo: "./resources/images/favicon.ico",  // Optional: add your logo
+    logoWidth: 80,  // Adjust based on your needs
+    logoHeight: 80, // Adjust based on your needs
+    title: "ReefScape",
+    titleFont: "bold 16px Arial",
+    titleColor: "#000000",
+    titleBackgroundColor: "#ffffff",
+    titleHeight: 70,
+    titleTop: 20
 };
+
+// Initialize QR code
+var qr = null;
+
+function initializeQRCode() {
+    try {
+        const qrContainer = document.getElementById("qrcode");
+        if (qrContainer) {
+            // Clear existing QR code if any
+            qrContainer.innerHTML = '';
+            // Create new QR code instance
+            qr = new QRCode(qrContainer, options);
+        }
+    } catch (error) {
+        console.error("QR Code initialization error:", error);
+    }
+}
 
 // Must be filled in: e=event, m=match#, l=level(q,qf,sf,f), t=team#, r=robot(r1,r2,b1..), s=scouter
 //var requiredFields = ["e", "m", "l", "t", "r", "s", "as"];
@@ -863,22 +892,34 @@ function updateQRHeader() {
 
 
 function qr_regenerate() {
-  // Validate required pre-match date (event, match, level, robot, scouter)
-  if (!pitScouting) {
-    if (validateData() == false) {
-      // Don't allow a swipe until all required data is filled in
-      return false
+    // Validate required pre-match data
+    if (!pitScouting) {
+        if (validateData() == false) {
+            return false;
+        }
     }
-  }
 
-  // Get data
-  data = getData(dataFormat)
-  // Regenerate QR Code
-  //qr.makeCode(data+ "\r")
-  qr.makeCode(data)
+    try {
+        // Get data
+        const data = getData(dataFormat);
+        
+        // Clear existing QR code
+        if (qr) {
+            qr.clear();
+        }
+        
+        // Generate new QR code
+        if (qr) {
+            qr.makeCode(data);
+        }
 
-  updateQRHeader()
-  return true
+        // Update QR header
+        updateQRHeader();
+        return true;
+    } catch (error) {
+        console.error("QR regeneration error:", error);
+        return false;
+    }
 }
 
 function qr_clear() {
@@ -1560,6 +1601,7 @@ window.onload = function () {
       getSchedule(ec);
     }
     this.drawFields();
+    initializeQRCode(); // Initialize QR code
   }
 };
 
