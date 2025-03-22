@@ -13,19 +13,16 @@
 		<script>
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', () => {
-					navigator.serviceWorker.register('./sw.js', { 
-						scope: '/Reefscape-Scouting-App/R2/' // Updated scope to match repository path
-					})
-					.catch(error => {
-						console.log('SW registration failed:', error);
-					});
+					navigator.serviceWorker.register('/sct/sw.js', { 
+						scope: '/sct/' // Match your GitHub Pages path
+					}).then(registration => console.log('SW registered'))
+					  .catch(err => console.log('SW registration failed:', err));;	
 				});
 			}
 		</script>
 	</head>
 
 	<body>
-		<script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
 		<form id="scoutingForm" onsubmit="return false" name="scoutingForm">
 			<div id="main-panel-holder">
 				<div id="prematch" class="main-panel" style="background-color: black;">
@@ -128,23 +125,40 @@
 					<p class="match-label"><input type="button" value="Prev" id="prevButton8" onclick="swipePage(-1)"> <input type="button" value="Next" id="nextButton10" onclick="swipePage(1)"></p>
 				</div>
 
-				<div id="qr-section" class="main-panel">
-					<div class="panel-header">
-						<h2>QR Code Generation</h2>
+				<div id="qr-code" class="main-panel" style="background-color: white;">
+					<h1 id="qrHeader1" >
+						<span class="odd">R</span>
+						<span class="even">E</span>
+						<span class="odd">E</span>
+						<span class="even">F</span>
+						<span class="odd">S</span>
+						<span class="even">C</span>
+						<span class="odd">A<span>
+						<span class="even">P</span>
+						<span class="odd">E</span>
+					</h1>
+					<h2 id="qrHeader2">Generate QR Code</h2>
+					<p class="match-label"><input type="button" value="Prev" id="prevButton9" onclick="swipePage(-1)"></p>
+					<p id="qr-info"><span id="display_qr-info" style="border: none; text-align: center;"></span></p>
+					<table id="qr-table"><tr><td width="5%">&nbsp;</td><td width="90%">
+						<div id="qrcode" style="text-align:center">
+							<script>
+						// Create QRCode Object
+								qr = new QRCode(document.getElementById("qrcode"), options)
+					</script>
 					</div>
-					
-					<div class="qr-container">
-						<!-- QR code will be generated here -->
-						<div id="qrcode"></div>
-						
-						<!-- Info display -->
-						<div id="display_qr-info" class="qr-info"></div>
-						
-						<!-- Control buttons -->
-						<div class="qr-controls">
-							<button onclick="qr_regenerate()" class="btn">Regenerate QR</button>
-							<button onclick="copyData()" class="btn">Copy Data</button>
-						</div>
+				</td><td width="5%">&nbsp;</td></tr>
+				<tr><td width="5%">&nbsp;</td><td width="90%">
+					<div>
+						<p id="data" style="text-align:center"></p>
+					</div>
+				</td><td width="5%">&nbsp;</td></tr>
+			</table>
+					<p></p>
+					<p class="match-label"><input type="button" value="Display Data" id="displayButton" onclick="displayData()">
+						<input type="button" value="Copy Data" id="copyButton" onclick="copyData()"></p>
+					<div id="clearButton">
+						<button type="button" class="clearForm" onclick="clearForm()">Clear Form</button>
 					</div>
 					<br>
 				</div>
