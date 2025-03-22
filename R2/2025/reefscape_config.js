@@ -19,7 +19,7 @@ var config_data = `
         "name": "Event",
         "code": "e",
         "type": "event",
-        "defaultValue": "2025mitry",
+        "defaultValue": "2025milac",
         "required": "true"
       },
       {
