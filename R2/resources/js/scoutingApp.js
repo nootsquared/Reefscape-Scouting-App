@@ -10,41 +10,12 @@ var checkboxAs = 'YN';
 var ColWidth = '200px';
 var VIBRATION_DURATION = 50;  // Short vibration duration in ms
 
-// Options for QR Code generation
+// Options
 var options = {
-    text: "",
-    width: 512,
-    height: 512,
-    correctLevel: QRCode.CorrectLevel.L,
-    quietZone: 15,
-    quietZoneColor: '#FFFFFF',
-    logo: "./resources/images/favicon.ico",  // Optional: add your logo
-    logoWidth: 80,  // Adjust based on your needs
-    logoHeight: 80, // Adjust based on your needs
-    title: "ReefScape",
-    titleFont: "bold 16px Arial",
-    titleColor: "#000000",
-    titleBackgroundColor: "#ffffff",
-    titleHeight: 70,
-    titleTop: 20
+  correctLevel: QRCode.CorrectLevel.L,
+  quietZone: 15,
+  quietZoneColor: '#FFFFFF'
 };
-
-// Initialize QR code
-var qr = null;
-
-function initializeQRCode() {
-    try {
-        const qrContainer = document.getElementById("qrcode");
-        if (qrContainer) {
-            // Clear existing QR code if any
-            qrContainer.innerHTML = '';
-            // Create new QR code instance
-            qr = new QRCode(qrContainer, options);
-        }
-    } catch (error) {
-        console.error("QR Code initialization error:", error);
-    }
-}
 
 // Must be filled in: e=event, m=match#, l=level(q,qf,sf,f), t=team#, r=robot(r1,r2,b1..), s=scouter
 //var requiredFields = ["e", "m", "l", "t", "r", "s", "as"];
@@ -788,12 +759,12 @@ function configure() {
 }
 
 function getRobot() {
-  return "r2";
+  return "r1";
 }
 
 
 function resetRobot() {
-  document.querySelector('input[value="r2"]').checked = true;
+  document.querySelector('input[value="r1"]').checked = true;
 }
 
 
@@ -820,45 +791,57 @@ function validateData() {
   return ret
 }
 
-function getData(format) {
-    // Debug logging
-    console.log("Generating QR data for format:", format);
-    
-    let matchNumber = document.getElementById("input_m").value;
-    let teamNumber = document.getElementById("input_t").value;
-    let scoutName = document.getElementById("input_sn").value;
-    
-    // Validate essential data
-    if (!matchNumber || !teamNumber || !scoutName) {
-        console.error("Missing required data:", { matchNumber, teamNumber, scoutName });
-        alert("Please fill in all required fields (Match Number, Team Number, Scout Name)");
-        return null;
+function getData(dataFormat) {
+  var Form = document.forms.scoutingForm;
+  var UniqueFieldNames = [];
+  var fd = new FormData();
+  var str = [];
+
+  switch (checkboxAs) {
+    case 'TF':
+      checkedChar = 'T';
+      uncheckedChar = 'F';
+      break;
+    case '10':
+      checkedChar = '1';
+      uncheckedChar = '0';
+      break;
+    default:
+      var checkedChar = 'Y';
+      var uncheckedChar = 'N';
+  }
+
+  // collect the names of all the elements in the form
+  var fieldnames = Array.from(Form.elements, formElmt => formElmt.name);
+
+  // make sure to add the name attribute only to elements from which you want to collect values.  Radio button groups all share the same name
+  // so those element names need to be de-duplicated here as well.
+  fieldnames.forEach((fieldname) => { if (fieldname != "" && !UniqueFieldNames.includes(fieldname)) { UniqueFieldNames.push(fieldname) } });
+
+  UniqueFieldNames.forEach((fieldname) => {
+    var thisField = Form[fieldname];
+
+    if (thisField.type == 'checkbox') {
+      var thisFieldValue = thisField.checked ? checkedChar : uncheckedChar;
+    } else {
+      var thisFieldValue = thisField.value ? thisField.value.replace(/"/g, '').replace(/;/g, "-") : " ";
     }
+    fd.append(fieldname, thisFieldValue)
+  })
 
-    // Get selected robot position (R2)
-    const robotPosition = document.querySelector('input[name="r"]:checked')?.value;
-    console.log("Robot position:", robotPosition);
-    
-    if (robotPosition !== 'r2') {
-        console.error("Invalid robot position. Expected 'r2', got:", robotPosition);
-        alert("Please select R2 position");
-        return null;
-    }
-
-    // Collect all form data
-    let data = {
-        match: matchNumber,
-        team: teamNumber,
-        scout: scoutName,
-        position: robotPosition,
-        // Add all other form fields here
-        // ...
-    };
-
-    console.log("Collected data:", data);
-    
-    // Convert to your required format
-    return JSON.stringify(data);
+  if (dataFormat == "kvs") {
+    Array.from(fd.keys()).forEach(thisKey => {
+      str.push(thisKey + "=" + fd.get(thisKey))
+    });
+    return str.join(";")
+  } else if (dataFormat == "tsv") {
+    Array.from(fd.keys()).forEach(thisKey => {
+      str.push(fd.get(thisKey))
+    });
+    return str.join("\t")
+  } else {
+    return "unsupported dataFormat"
+  }
 }
 
 function updateQRHeader() {
@@ -880,49 +863,22 @@ function updateQRHeader() {
 
 
 function qr_regenerate() {
-    console.log("Starting QR regeneration");
-    
-    try {
-        // Get the data
-        const data = getData(dataFormat);
-        if (!data) {
-            console.error("Failed to get data for QR code");
-            return false;
-        }
-
-        // Get QR container
-        const qrContainer = document.getElementById("qrcode");
-        if (!qrContainer) {
-            console.error("QR code container not found");
-            return false;
-        }
-
-        // Clear existing QR code
-        qrContainer.innerHTML = '';
-
-        // Generate new QR code
-        const qrOptions = {
-            text: data,
-            width: 512,
-            height: 512,
-            correctLevel: QRCode.CorrectLevel.L,
-            quietZone: 15
-        };
-
-        new QRCode(qrContainer, qrOptions);
-        
-        // Update display
-        const displayData = document.getElementById("display_qr-info");
-        if (displayData) {
-            displayData.textContent = `Match: ${document.getElementById("input_m").value} | Team: ${document.getElementById("input_t").value}`;
-        }
-
-        console.log("QR code generated successfully");
-        return true;
-    } catch (error) {
-        console.error("QR generation error:", error);
-        return false;
+  // Validate required pre-match date (event, match, level, robot, scouter)
+  if (!pitScouting) {
+    if (validateData() == false) {
+      // Don't allow a swipe until all required data is filled in
+      return false
     }
+  }
+
+  // Get data
+  data = getData(dataFormat)
+  // Regenerate QR Code
+  //qr.makeCode(data+ "\r")
+  qr.makeCode(data)
+
+  updateQRHeader()
+  return true
 }
 
 function qr_clear() {
@@ -1385,24 +1341,16 @@ function updateMatchStart(event) {
     return;
   }
   
-  const match = getCurrentMatch();
-  console.log("Current match data:", match);
-  
-  // Check if the radio input exists before trying to set it
-  const r2Radio = document.querySelector('input[value="r2"]');
-  if (r2Radio) {
-    r2Radio.checked = true;
-  } else {
-    console.log("Warning: R2 radio button not found");
-  }
+  // Always select R1
+  document.querySelector('input[value="r1"]').checked = true;
   
   updateRobotPositions();
 
-  // Auto-fill team number for R2
+  // Auto-fill team number for R1
   if (event.target.id == "input_m") {
+    const match = getCurrentMatch();
     if (match && match.red && match.red.team_keys) {
-      const r2TeamNumber = match.red.team_keys[1].replace("frc", "");
-      console.log("R2 Team Number:", r2TeamNumber);
+      const r1TeamNumber = match.red.team_keys[0].replace("frc", "");
       document.getElementById("input_t").value = r2TeamNumber;
       onTeamnameChange();
     }
@@ -1604,12 +1552,11 @@ window.onload = function () {
       getSchedule(ec);
     }
     this.drawFields();
-    initializeQRCode(); // Initialize QR code
   }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Set initial robot selection to R2
+  // Set initial robot selection to R1
   document.querySelector('input[value="r2"]').checked = true;
   
   // Disable changing robot selection
@@ -1618,27 +1565,4 @@ document.addEventListener('DOMContentLoaded', function() {
       input.disabled = true;
     }
   });
-});
-
-// Add event listeners for form changes
-function setupQRCodeListeners() {
-    const formInputs = document.querySelectorAll('input, select, textarea');
-    formInputs.forEach(input => {
-        input.addEventListener('change', () => {
-            console.log(`Form field changed: ${input.id}`);
-            qr_regenerate();
-        });
-    });
-}
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-    setupQRCodeListeners();
-    
-    // Force R2 selection
-    const r2Radio = document.querySelector('input[value="r2"]');
-    if (r2Radio) {
-        r2Radio.checked = true;
-        r2Radio.disabled = true; // Prevent changing from R2
-    }
 });
