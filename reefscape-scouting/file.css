@@ -1,0 +1,55 @@
+/* Center all elements */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a; /* Darkest gray */
+}
+
+/* Style the container box */
+.container {
+    width: 85%; /* Increase width */
+    max-width: 700px; /* Increase max-width */
+    padding: 30px; /* Increase padding */
+    background-color: #313131; /* Dark gray */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
+    background-size: 30px 30px;
+    background-position: -5px -5px;
+    border: 3px solid #a9a9a9; /* Dark gray outline */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 8px; /* Optional: rounded corners */
+    min-height: 85vh; /* Increase minimum height */
+    margin-top: 30px; /* Increase space from the top of the page */
+    margin-bottom: 30px; /* Increase space from the bottom of the page */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the title box horizontally */
+}
+
+/* Style the title box */
+.title-box {
+    text-align: center;
+    background-color: #444; /* Background color for the title box */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    display: inline-block;
+    margin: 0 auto; /* Center the title box */
+}
+
+/* Style the title */
+.title {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Lexend font class */
+.lexend-title {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; /* Adjust weight as needed */
+    font-style: normal;
+}
